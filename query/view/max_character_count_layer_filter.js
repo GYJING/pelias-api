@@ -33,8 +33,7 @@ module.exports = function( excludedLayers, maxCharCount ) {
     return () => null;
   }
 
-  // create a new VariableStore with only the layers property
-  var vsWithOnlyIncludedLayers = new peliasQuery.Vars({ 'layers': includedLayers });
+  // remove the excludedLayers from the `layers` variable
 
   // ensure char count is within a reasonable range
   maxCharCount = _.clamp(maxCharCount, MIN_CHAR_COUNT, MAX_CHAR_COUNT);
@@ -52,7 +51,12 @@ module.exports = function( excludedLayers, maxCharCount ) {
       return null;
     }
 
-    // use existing 'layers' query
-    return peliasQuery.view.layers(vsWithOnlyIncludedLayers);
+    // update layers var to not include excludedLayers
+    const old_layers = vs.var('layers').get() || allLayers;
+    const new_layers = old_layers.filter(layer => !excludedLayers.includes(layer));
+    vs.var('layers', new_layers);
+
+    // this 'view' doesn't render anything, it merely mutates the `layers` variable
+    return null;
   };
 };

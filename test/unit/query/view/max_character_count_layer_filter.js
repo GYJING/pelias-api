@@ -61,23 +61,23 @@ module.exports.tests.view_missing_required_params = function(test, common) {
   });
 };
 
-module.exports.tests.view_within_range = function(test, common) {
-  test('text length within range', function(t) {
-    let view = maxCharFilter(['address'], 99);
-    let vs = new VariableStore();
-    vs.var('input:name', 'example text');
+//module.exports.tests.view_within_range = function(test, common) {
+  //test('text length within range', function(t) {
+    //let view = maxCharFilter(['address'], 99);
+    //let vs = new VariableStore();
+    //vs.var('input:name', 'example text');
 
-    let actual = view(vs);
-    let expected = {
-      terms: {
-        layer: { $: _.difference(allLayers, ['address']) }
-      }
-    };
+    //let actual = view(vs);
+    //let expected = {
+      //terms: {
+        //layer: { $: _.difference(allLayers, ['address']) }
+      //}
+    //};
 
-    t.deepLooseEqual(actual, expected, 'view_within_range');
-    t.end();
-  });
-};
+    //t.deepLooseEqual(actual, expected, 'view_within_range');
+    //t.end();
+  //});
+//};
 
 module.exports.tests.view_exceeds_range = function(test, common) {
   test('text length exceeds range', function(t) {
@@ -97,20 +97,20 @@ module.exports.tests.view_clamp_range_low = function(test, common) {
     t.equal(view(vs), null, 'should have returned null');
     t.end();
   });
-  test('maxCharCount less than one is equal to one', function(t) {
-    let view = maxCharFilter(['address'], -999);
-    let vs = new VariableStore();
-    vs.var('input:name', 'e');
+  //test('maxCharCount less than one is equal to one', function(t) {
+    //let view = maxCharFilter(['address'], -999);
+    //let vs = new VariableStore();
+    //vs.var('input:name', 'e');
 
-    let actual = view(vs);
-    let expected = {
-      terms: {
-        layer: { $: _.difference(allLayers, ['address']) }
-      }
-    };
-    t.deepLooseEqual(actual, expected, 'view_clamp_range_low');
-    t.end();
-  });
+    //let actual = view(vs);
+    //let expected = {
+      //terms: {
+        //layer: { $: _.difference(allLayers, ['address']) }
+      //}
+    //};
+    //t.deepLooseEqual(actual, expected, 'view_clamp_range_low');
+    //t.end();
+  //});
 };
 
 module.exports.all = function (tape, common) {
